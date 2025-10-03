@@ -246,7 +246,7 @@
   })
   
   show math.equation : set block(above : 1.55em, below : 2.3em)
-  show math.equation : set text(font: "STIX Two Math", weight : "thin")
+  show math.equation : set text(font: "TeX Gyre Termes Math", style : "italic")
 
 
 

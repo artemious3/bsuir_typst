@@ -82,7 +82,7 @@
       grid(
         columns:(12.5mm + number_width, 1fr),
         rows:(auto),
-          h(12.5mm) + counter(heading).display(),
+          h(12.5mm) + counter(heading).display(body.numbering),
         upper(body.body)
       )
     )
@@ -106,7 +106,7 @@
       grid(
         columns:(12.5mm + number_width, 1fr),
         rows:(auto),
-          h(12.5mm) + counter(heading).display(),
+          h(12.5mm) + counter(heading).display(body.numbering),
         body.body
       )
     )
@@ -119,7 +119,7 @@
     v(2.3em, weak : true) + box(
      text(
         weight : "bold",
-        counter(heading).display()
+        counter(heading).display(body.numbering)
       )  + " " +  text(
         weight : "regular",
         body.body
@@ -133,7 +133,7 @@
     box(
        text(
           weight : "regular",
-          counter(heading).display()
+          counter(heading).display(body.numbering)
         )  + " " 
       )
   }
@@ -260,8 +260,17 @@
 
   // убрать из ссылок слова "Таблица", "Рисунок"
   set ref(supplement: none)
-  
 
+  show outline: it => {
+    show heading: body => {
+      set text(size:14pt)
+      set align(center)
+      block(upper(body.body), spacing : 2em)
+    }
+    it
+  }
+
+  set outline(depth: 2)
 
   doc
 }

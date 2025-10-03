@@ -286,7 +286,6 @@
   items.join()
 }
 
-
 #let explanation(..args) = context {
 
   let gde_width = measure([где]).width;
@@ -304,7 +303,6 @@
     )
   )
 }
-
 
 #let table-multi-page(continue-header-label: [], continue-footer-label: [], ..table-args) = context {
   let columns = table-args.named().at("columns", default: 1)
@@ -349,4 +347,16 @@
     grid.footer(grid.cell(align(right + top)[#continue-footer-label <table-footer> ]))
   )
 }
+
+#let longtable(..table-args) = context {
+  table-multi-page(
+    continue-header-label: [
+      Продолжение таблицы #counter(figure.where(kind:table)).display()
+
+    ],
+    table(..table-args)
+  )
+}
+
+
 

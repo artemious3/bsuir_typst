@@ -77,12 +77,18 @@
 
     let number_width = measure(counter(heading).display()).width + 0.1em;
 
+    let counter_str = if body.numbering != none {
+      counter(heading).display(body.numbering)
+    } else {
+      ""
+    }
+
     block(
       spacing:2em,
       grid(
         columns:(12.5mm + number_width, 1fr),
         rows:(auto),
-          h(12.5mm) + counter(heading).display(body.numbering),
+          h(12.5mm) + counter_str,
         upper(body.body)
       )
     )
@@ -101,12 +107,18 @@
 
     let number_width = measure(counter(heading).display()).width + 0.1em;
 
+    let counter_str = if body.numbering != none {
+      counter(heading).display(body.numbering)
+    } else {
+      ""
+    }
+
     block(
       spacing:2em,
       grid(
         columns:(12.5mm + number_width, 1fr),
         rows:(auto),
-          h(12.5mm) + counter(heading).display(body.numbering),
+          h(12.5mm) + counter_str,
         body.body
       )
     )
@@ -116,10 +128,16 @@
     set text(
       size: 14pt,
     )
+
+    let counter_str = if body.numbering != none {
+      counter(heading).display(body.numbering)
+    } else {
+      ""
+    }
     v(2.3em, weak : true) + box(
      text(
         weight : "bold",
-        counter(heading).display(body.numbering)
+        counter_str
       )  + " " +  text(
         weight : "regular",
         body.body
@@ -130,10 +148,17 @@
     set text(
       size: 14pt,
     )
+
+    let counter_str = if body.numbering != none {
+      counter(heading).display(body.numbering)
+    } else {
+      ""
+    }
+
     box(
        text(
           weight : "regular",
-          counter(heading).display(body.numbering)
+          counter_str
         )  + " " 
       )
   }
@@ -370,6 +395,15 @@
     ],
     table(..table-args)
   )
+}
+
+#let heading_unnumbered(body) = {
+  show heading: it => {
+    set align(center)
+    set text(size:14pt, weight:"semibold")
+    block(upper(it.body), spacing : 2em)
+  }
+  heading(body, numbering:none)
 }
 
 

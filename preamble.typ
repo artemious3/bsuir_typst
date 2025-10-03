@@ -211,8 +211,22 @@
       fig.body)
   }
 
-  show figure.where(kind: table): set figure(supplement : "Таблица")
-  show figure.where(kind: table): set align(left)
+  show figure.where(kind:table): it => context {
+      set figure(supplement : "Таблица")
+      set align(left)
+
+      show figure.caption: b => context {
+        let counter = counter(figure.where(kind:table)).display()
+        let counter_width = measure(counter).width
+        let supplement_width = measure(b.supplement + b.separator).width
+        grid(
+          columns:(supplement_width + counter_width, 1fr),
+          b.supplement + " " + counter + b.separator, b.body
+        )
+      }
+
+      it
+  }
 
   // Поскольку Typst считает теперь top-edge текста 
   // его baseline, то верхняя границы клетки таблицы 

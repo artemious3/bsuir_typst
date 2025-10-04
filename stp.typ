@@ -391,7 +391,6 @@
   table-multi-page(
     continue-header-label: [
       Продолжение таблицы #counter(figure.where(kind:table)).display()
-
     ],
     table(..table-args)
   )

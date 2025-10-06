@@ -1,4 +1,5 @@
 
+
 #let STP2024(doc) = {
 
   // ########################################
@@ -61,7 +62,10 @@
 
   // set block(
   //   stroke : black,
-  // )
+  // 
+  //
+
+
 
   // ########################################
   // ##########  HEADINGS      ##############
@@ -295,8 +299,6 @@
                       gap : 1.15em)
 
 
-  // REFERENCES
-
   // убрать из ссылок слова "Таблица", "Рисунок"
   set ref(supplement: none)
 
@@ -310,6 +312,34 @@
   }
 
   set outline(depth: 2)
+
+  set bibliography(
+    title : [Список использованных источников],
+    style : "gost-r-7-0-5-2008-VAK9.csl",
+    full:true,
+  )
+
+  show bibliography: it => {
+    show heading : h => {
+      set text(size:14pt)
+      set align(center)
+
+      pagebreak(weak:true) 
+      block(upper(it.at("title")), below : 2em)
+      v(1em)
+    }
+
+    // hacky but works
+    show block:  it => {
+      par(it.body)
+    }
+
+    set par(
+      first-line-indent: (amount : 12.5mm, all:true),
+    )
+    it
+  }
+
 
   doc
 }
@@ -396,6 +426,7 @@
   )
 }
 
+
 #let heading_unnumbered(body) = {
   show heading: it => {
     set align(center)
@@ -404,6 +435,3 @@
   }
   heading(body, numbering:none)
 }
-
-
-

@@ -243,6 +243,9 @@ table.hline(stroke:none),
 текст текст текст текст текст текст текст текст.
 
 
+#bibliography("bib.bib")
+
+
 
 
 

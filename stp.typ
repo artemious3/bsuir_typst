@@ -344,11 +344,15 @@
   doc
 }
 
+
+// п 2.7.2 : пропускаем некоторые буквы русского алфавита
+// для приложений и (вероятно, по аналогии) списков
+#let ru_alph="абвгдежзиклмнпрстуфхцшщэюя".clusters()
+
 #let abclist(..a) = {
   // п 2.3.8 : Строчные буквы русского алфавита.
   // Предполагаем, что по аналогии с пунктом 2.7.2 
   // о приложениях
-  let ru_alph="абвгдежзиклмнпрстуфхцшщэюя".clusters()
   let items = a.pos().enumerate().map(
     ((idx,item)) => par(ru_alph.at(idx) + ")" + h(0.5em) + item)
   )
@@ -434,4 +438,35 @@
     block(upper(it.body), spacing : 2em)
   }
   heading(body, numbering:none)
+}
+
+
+
+#let appendix(..args, body) = context {
+  let cnt = counter("appendix")
+  let cnt_disp = upper(ru_alph.at(cnt.get().at(0)))
+  let atype = args.at("type")
+  let aname = args.at("title")
+
+  show heading: it =>  {
+    set text(size:14pt)
+    set align(center)
+    pagebreak(weak:true)
+    block([ПРИЛОЖЕНИЕ #cnt_disp \ (#atype) \ #aname], below:2em)
+  }
+
+  set figure(numbering : (n) => {
+    let heading_counter = upper(ru_alph.at(counter("appendix").get().at(0)))
+     heading_counter + "."  + str(n)
+  })
+
+  heading(
+    numbering : none,
+    [Приложение #cnt_disp (#atype) #aname]
+  )
+
+  body
+
+  counter("appendix").step()
+
 }

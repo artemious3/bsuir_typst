@@ -11,7 +11,7 @@
 ## Сборка
 
 ```
-typst compile test.typ
+typst compile main.typ
 ```
 
 ## TODO 

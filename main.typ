@@ -293,7 +293,7 @@ table.cell(colspan:4)[#par([Примечание – текст текст те�
 
 
 
-#bibliography("bib.bib")
+#bibliography("bibliography.bib")
 
 
 

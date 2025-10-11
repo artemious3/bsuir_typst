@@ -88,7 +88,7 @@
     }
 
     block(
-      spacing:2em,
+      spacing:2.3em,
       grid(
         columns:(12.5mm + number_width, 1fr),
         rows:(auto),
@@ -118,7 +118,7 @@
     }
 
     block(
-      spacing:2em,
+      spacing:2.3em,
       grid(
         columns:(12.5mm + number_width, 1fr),
         rows:(auto),
@@ -306,7 +306,7 @@
     show heading: body => {
       set text(size:14pt)
       set align(center)
-      block(upper(body.body), spacing : 2em)
+      block(upper(body.body), spacing : 2.3em)
     }
     it
   }
@@ -325,8 +325,8 @@
       set align(center)
 
       pagebreak(weak:true) 
-      block(upper(it.at("title")), below : 2em)
-      v(1em)
+      block(upper(it.at("title")), below : 2.3em)
+      v(1.15em)
     }
 
     // hacky but works
@@ -435,7 +435,7 @@
   show heading: it => {
     set align(center)
     set text(size:14pt, weight:"semibold")
-    block(upper(it.body), spacing : 2em)
+    block(upper(it.body), spacing : 2.3em)
   }
   heading(body, numbering:none)
 }
@@ -452,7 +452,7 @@
     set text(size:14pt)
     set align(center)
     pagebreak(weak:true)
-    block([ПРИЛОЖЕНИЕ #cnt_disp \ (#atype) \ #aname], below:2em)
+    block([ПРИЛОЖЕНИЕ #cnt_disp \ (#atype) \ #aname], below:2.3em)
   }
 
   set figure(numbering : (n) => {

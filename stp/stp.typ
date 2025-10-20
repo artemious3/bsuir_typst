@@ -16,7 +16,11 @@
     footer : context {
       set align(right)
       set text(14pt)
-      counter(page).display("1")
+      if counter(page).get().at(0) != 1 {
+        counter(page).display("1")
+      } else {
+        []
+      }
     },
     footer-descent : 10mm,
   )

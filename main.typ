@@ -2,6 +2,12 @@
 #show: stp.STP2024
 
 
+
+
+
+Место для титульного листа
+#pagebreak()
+
 #outline()
 #pagebreak()
 

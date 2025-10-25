@@ -82,6 +82,10 @@
       size: 14pt,
       hyphenate : false,
     )
+    
+    set par(
+      justify: false
+    )
 
     let number_width = measure(counter(heading).display()).width + 0.1em;
 
@@ -111,6 +115,10 @@
     set text(
       size: 14pt,
       hyphenate : false,
+    )
+
+    set par(
+      justify: false
     )
 
     let number_width = measure(counter(heading).display()).width + 0.1em;

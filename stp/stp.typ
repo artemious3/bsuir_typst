@@ -388,6 +388,7 @@
 
     grid(
       columns : (auto, 1fr),
+      align : (right, left),
       rows : auto,
       column-gutter : 0.5em,
       row-gutter:1.15em,

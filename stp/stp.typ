@@ -193,10 +193,10 @@
 
   show enum: a => {
     let items = a.children.enumerate().map(
-      ((index,item)) => par(
-        numbering(a.numbering, index+1) + h(0.5em) + item.body)
+      ((index,item)) => 
+        numbering(a.numbering, index+1) + h(0.5em) + item.body + parbreak()
     )
-    items.join()
+    parbreak()+items.join()
   }
 
   set list(
@@ -206,10 +206,11 @@
 
   show list: a => {
     let items = a.children.map(
-      (item) => par(text(a.marker + h(0.5em) + item.body))
+      (item) =>
+        a.marker + h(0.5em) + item.body + parbreak()
     )
     
-    items.join()
+   parbreak()+items.join()
   }
 
 
@@ -373,9 +374,9 @@
   // Предполагаем, что по аналогии с пунктом 2.7.2 
   // о приложениях
   let items = a.pos().enumerate().map(
-    ((idx,item)) => par(ru_alph.at(idx) + ")" + h(0.5em) + item)
+    ((idx,item)) => ru_alph.at(idx) + ")" + h(0.5em) + item + parbreak()
   )
-  items.join()
+  parbreak()+items.join()
 }
 
 #let explanation(..args) = context {

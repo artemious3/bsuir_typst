@@ -39,8 +39,8 @@
     overhang : false,
 
     // п. 2.1.1 : Для установки межстрочного интервала.
-    // MS Word определяет межстрочный интервал как расстояние 
-    // между baselines. Typst -- как расстояние между 
+    // MS Word определяет межстрочный интервал как расстояние
+    // между baselines. Typst -- как расстояние между
     // bottom-edge первой линии и top-edge следующей.
     // Этот параметр установлен так, чтобы соответствовать
     // поведению Word
@@ -59,14 +59,14 @@
     // информацией из https://en.wikipedia.org/wiki/Leading,
     // что MS Word определяет одинарный интервал, как 1.15em
     leading : 1.15em,
-    
+
     // п. 2.1.1 : выравнивание по ширине
     justify : true,
   )
 
   // set block(
   //   stroke : black,
-  // 
+  //
   //
 
 
@@ -82,9 +82,9 @@
       size: 14pt,
       hyphenate : false,
     )
-    
+
     set par(
-      justify: false
+      justify : false
     )
 
     let number_width = measure(counter(heading).display()).width + 0.1em;
@@ -118,7 +118,7 @@
     )
 
     set par(
-      justify: false
+      justify : false
     )
 
     let number_width = measure(counter(heading).display()).width + 0.1em;
@@ -176,7 +176,7 @@
        text(
           weight : "regular",
           counter_str
-        )  + " " 
+        )  + " "
       )
   }
 
@@ -193,7 +193,7 @@
 
   show enum: a => {
     let items = a.children.enumerate().map(
-      ((index,item)) => 
+      ((index,item)) =>
         numbering(a.numbering, index+1) + h(0.5em) + item.body + parbreak()
     )
     parbreak()+items.join()
@@ -209,7 +209,7 @@
       (item) =>
         a.marker + h(0.5em) + item.body + parbreak()
     )
-    
+
    parbreak()+items.join()
   }
 
@@ -274,9 +274,9 @@
       it
   }
 
-  // Поскольку Typst считает теперь top-edge текста 
-  // его baseline, то верхняя границы клетки таблицы 
-  // расположена очень близко к тексту. Нужно добавить 
+  // Поскольку Typst считает теперь top-edge текста
+  // его baseline, то верхняя границы клетки таблицы
+  // расположена очень близко к тексту. Нужно добавить
   // вертикальный отступ
   show table.cell : it => {
     v(0.7em) + it
@@ -290,7 +290,7 @@
   set math.equation(block: true, numbering: (.., num) => {
    "(" +  str(counter(heading).get().at(0)) + "." + str(num) + ")"
   })
-  
+
   show math.equation : set block(above : 1.55em, below : 2.3em)
   show math.equation : set text(font: "TeX Gyre Termes Math", style : "italic")
 
@@ -334,7 +334,7 @@
   set outline(depth: 2)
 
   set bibliography(
-    title : [Список использованных источников],
+    title : [Список литературных источников],
     style : "gost-r-7-0-5-2008-VAK9.csl",
     full:true,
   )
@@ -344,7 +344,7 @@
       set text(size:14pt, hyphenate:false)
       set align(center)
 
-      pagebreak(weak:true) 
+      pagebreak(weak:true)
       block(upper(it.at("title")), below : 2.3em)
       v(1.15em)
     }
@@ -371,7 +371,7 @@
 
 #let abclist(..a) = {
   // п 2.3.8 : Строчные буквы русского алфавита.
-  // Предполагаем, что по аналогии с пунктом 2.7.2 
+  // Предполагаем, что по аналогии с пунктом 2.7.2
   // о приложениях
   let items = a.pos().enumerate().map(
     ((idx,item)) => ru_alph.at(idx) + ")" + h(0.5em) + item + parbreak()
@@ -464,10 +464,14 @@
 
 
 #let appendix(..args, body) = context {
+  counter(figure.where(kind:image)).update(0)
+  counter(figure.where(kind:table)).update(0)
+
   let cnt = counter("appendix")
   let cnt_disp = upper(ru_alph.at(cnt.get().at(0)))
   let atype = args.at("type")
   let aname = args.at("title")
+
 
   show heading: it =>  {
     set text(size:14pt, hyphenate:false)
@@ -481,13 +485,17 @@
      heading_counter + "."  + str(n)
   })
 
-  heading(
-    numbering : none,
-    [Приложение #cnt_disp (#atype) #aname]
-  )
+  heading(outlined:false,[])
 
+  {
+      show figure: none;
+      [#figure(
+              kind:"hidden_appendix",
+              supplement : [Приложение],
+              numbering: (..)=>cnt_disp,
+              caption: [(#atype) #aname])[]<appendix>]
+  }
   body
 
   counter("appendix").step()
-
 }

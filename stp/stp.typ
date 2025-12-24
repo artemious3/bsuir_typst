@@ -341,7 +341,7 @@
 
   show bibliography: it => {
     show heading : h => {
-      set text(size:14pt, hyphenate:false)
+      set text(size:14pt)
       set align(center)
 
       pagebreak(weak:true)
@@ -351,6 +351,7 @@
 
     // hacky but works
     show block:  it => {
+      set text(hyphenate: false)
       par(it.body)
     }
 

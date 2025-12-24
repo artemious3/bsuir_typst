@@ -349,6 +349,8 @@
       v(1.15em)
     }
 
+    show "] ": "]" + h(0.4em)
+
     // hacky but works
     show block:  it => {
       set text(hyphenate: false)

@@ -6,31 +6,27 @@
 #set text(
   13pt,
   font: "GOST type B",
+  style: "italic",
+  hyphenate: false,
 )
-
-//fake italic
-#show text: body => skew(ax: -15deg, body)
 
 #let leftcell(body) = table.cell(align: left)[#pad(left: 5pt)[#body]]
 
-#let empty(prefix: 0) = {
-  let empties = ([],) * prefix
-  (..empties, [], [], [], [])
+#let empty() = {
+  ([], [], [], [])
 }
 
-#let section(title, prefix: 0) = {
-  let empties = ([],) * prefix
-  (..empties, [], [], table.cell(align: center + horizon, underline[#title]), [])
+#let section(title) = {
+  ([], [], table.cell(align: center + horizon, underline[#title]), [])
 }
 
-#let d(code, name-lines, note, prefix: 0) = {
+#let d(code, name-lines, note) = {
   for (i, line) in name-lines.enumerate() {
     let code-cell = if i == 0 { leftcell[#code] } else { [] }
 
     let note-cell = if i == 0 { note } else { [] }
 
-    (..([ ],) * prefix,
-    [],
+    ([],
     code-cell,
     leftcell[#line],
     note-cell)
@@ -41,7 +37,7 @@
   #table(
     align: horizon + center,
     columns: (15pt, 18pt, 20pt, 1fr, 1.1fr, 0.6fr),
-    rows: (1fr,) * 38,
+    rows: (1fr,) * 36,
     stroke: (x, y) => {
       if x in (2, 3, 4) {
         (left: 2pt, right: 1pt, top: 1pt, bottom: 1pt)
@@ -52,7 +48,7 @@
       }
     },
 
-    table.cell(rowspan: 7, stroke: 2pt, text(size: 11pt)[#rotate(-90deg, reflow: true)[Перв. примен.]]),
+    table.cell(rowspan: 7, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Перв. примен.]]),
     table.cell(rowspan: 7, stroke: 2pt, text(size: 11pt)[#rotate(-90deg, reflow: true)[ГУИР.ГУИР.353503.023 ПЗ]]),
     table.cell(rowspan: 2, stroke: 2pt, text(size: 12pt)[#rotate(-90deg, reflow: true)[Зона]]),
     table.cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Обозначение]),
@@ -73,47 +69,79 @@
 
     ..empty(),
 
-// 6 columns
+    table.cell(rowspan: 7, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Справочный №]]),
+    table.cell(rowspan: 7, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
 
-    ..section(prefix: 2)[Графические документы],
+    ..section()[Графические документы],
 
-    ..empty(prefix: 2),
+    ..empty(),
 
     ..d("ГУИР.05061202.023.01",
       ("Функциональная схема",
       "алгоритма, реализующего",
       "программное средство"),
-      "Формат А3",  prefix: 2
+      "Формат А3"
     ),
 
-    ..empty(prefix: 2),
+    ..empty(),
+
 
     ..d(
       "ГУИР.05061202.023.02",
-      ("Блок схема алгоритма,",
-       "реализующего программное",
-       "средство"),
-      "Формат А3", prefix: 2
+      ("Блок схема алгоритма,",),
+      "Формат А3"
     ),
 
-    ..empty(prefix: 2),
+    table.cell(rowspan: 5, stroke: none, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+    table.cell(rowspan: 5, stroke: none, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+
+    ..d(
+      "",
+      ("реализующего программное",
+       "средство"),
+      ""
+    ),
+
+
+    ..empty(),
 
     ..d(
       "ГУИР.05061202.023.01 ПЛ",
       ("Графики сравнения",
        "производительности процессоров"),
-      "Формат А3", prefix: 2
+      "Формат А3"
     ),
 
-    ..empty(prefix: 2),
+    table.cell(rowspan: 4, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Подпись и дата]]),
+    table.cell(rowspan: 4, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+
+    ..empty(),
 
     ..d(
       "ГУИР.05061202.023.02 ПЛ",
       ("Графическое представление",
        "нагрузки на ядра процессоров"),
-      "Формат А3", prefix: 2
+      "Формат А3"
     ),
 
-    ..empty(prefix: 2)
+    ..empty(),
+
+    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Инв. № дубл.]]),
+    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+
+    ..empty() * 3,
+
+    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Взам. Инв. №]]),
+    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+
+    ..empty() * 3,
+
+    table.cell(rowspan: 4, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Подпись и дата]]),
+    table.cell(rowspan: 4, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+
+    ..empty() * 4,
+
+    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Инв. № подл.]]),
+    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
  )
 ]

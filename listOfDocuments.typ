@@ -1,3 +1,5 @@
+#import table: cell
+
 #set page(
   paper: "a4",
   margin: (left: 10mm, right: 5mm, top: 5mm, bottom: 10mm)
@@ -34,6 +36,7 @@
 }
 
 #box(height: 100%)[
+  #set rotate(reflow: true)
   #table(
     align: horizon + center,
     columns: (15pt, 18pt, 20pt, 1fr, 1.1fr, 0.6fr),
@@ -48,12 +51,12 @@
       }
     },
 
-    table.cell(rowspan: 7, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Перв. примен.]]),
-    table.cell(rowspan: 7, stroke: 2pt, text(size: 11pt)[#rotate(-90deg, reflow: true)[ГУИР.ГУИР.353503.023 ПЗ]]),
-    table.cell(rowspan: 2, stroke: 2pt, text(size: 12pt)[#rotate(-90deg, reflow: true)[Зона]]),
-    table.cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Обозначение]),
-    table.cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Наименование]),
-    table.cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Дополнительные сведения]),
+    cell(rowspan: 7, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Перв. примен.])),
+    cell(rowspan: 7, stroke: 2pt, text(size: 11pt, rotate(-90deg)[ГУИР.ГУИР.353503.023 ПЗ])),
+    cell(rowspan: 2, stroke: 2pt, text(size: 12pt, rotate(-90deg)[Зона])),
+    cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Обозначение]),
+    cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Наименование]),
+    cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Дополнительные сведения]),
 
     ..empty(),
 
@@ -69,8 +72,8 @@
 
     ..empty(),
 
-    table.cell(rowspan: 7, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Справочный №]]),
-    table.cell(rowspan: 7, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+    cell(rowspan: 7, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Справочный №])),
+    cell(rowspan: 7, stroke: 2pt)[],
 
     ..section()[Графические документы],
 
@@ -92,8 +95,8 @@
       "Формат А3"
     ),
 
-    table.cell(rowspan: 5, stroke: none, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
-    table.cell(rowspan: 5, stroke: none, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+    cell(rowspan: 5, stroke: none, []),
+    cell(rowspan: 5, stroke: none, []),
 
     ..d(
       "",
@@ -112,8 +115,8 @@
       "Формат А3"
     ),
 
-    table.cell(rowspan: 4, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Подпись и дата]]),
-    table.cell(rowspan: 4, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+    cell(rowspan: 4, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Подпись и дата])),
+    cell(rowspan: 4, stroke: 2pt,[]),
 
     ..empty(),
 
@@ -126,22 +129,22 @@
 
     ..empty(),
 
-    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Инв. № дубл.]]),
-    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+    cell(rowspan: 3, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Инв. № дубл.])),
+    cell(rowspan: 3, stroke: 2pt, []),
 
     ..empty() * 3,
 
-    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Взам. Инв. №]]),
-    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+    cell(rowspan: 3, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Взам. Инв. №])),
+    cell(rowspan: 3, stroke: 2pt, []),
 
     ..empty() * 3,
 
-    table.cell(rowspan: 4, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Подпись и дата]]),
-    table.cell(rowspan: 4, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+    cell(rowspan: 4, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Подпись и дата])),
+    cell(rowspan: 4, stroke: 2pt, []),
 
     ..empty() * 4,
 
-    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[Инв. № подл.]]),
-    table.cell(rowspan: 3, stroke: 2pt, text(size: 10pt)[#rotate(-90deg, reflow: true)[]]),
+    cell(rowspan: 3, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Инв. № подл.])),
+    cell(rowspan: 3, stroke: 2pt, []),
  )
 ]

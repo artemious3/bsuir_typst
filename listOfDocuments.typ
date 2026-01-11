@@ -2,7 +2,7 @@
 
 #set page(
   paper: "a4",
-  margin: (left: 10mm, right: 5mm, top: 5mm, bottom: 10mm)
+  margin: (left: 10mm, right: 5mm, top: 5mm, bottom: 13mm)
 )
 
 #set text(
@@ -12,25 +12,30 @@
   hyphenate: false,
 )
 
-#let leftcell(body) = table.cell(align: left)[#pad(left: 5pt)[#body]]
+#let left-cell(body) = cell(align: left)[#pad(left: 5pt)[#body]]
+
+#let right-label(content) = align(
+  right,
+  pad(right: 10pt, top: -12pt, text(size: 12pt, content))
+)
 
 #let empty() = {
   ([], [], [], [])
 }
 
 #let section(title) = {
-  ([], [], table.cell(align: center + horizon, underline[#title]), [])
+  ([], [], cell(align: center + horizon, underline(offset: 1.5pt)[#title]), [])
 }
 
-#let d(code, name-lines, note) = {
+#let doc(code, name-lines, note) = {
   for (i, line) in name-lines.enumerate() {
-    let code-cell = if i == 0 { leftcell[#code] } else { [] }
+    let code-cell = if i == 0 { left-cell[#code] } else { [] }
 
     let note-cell = if i == 0 { note } else { [] }
 
     ([],
     code-cell,
-    leftcell[#line],
+    left-cell[#line],
     note-cell)
   }
 }
@@ -49,13 +54,17 @@
       } else {
         1pt
       }
+
+      if y == 35 {
+        (bottom: 2pt)
+      }
     },
 
     cell(rowspan: 7, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Перв. примен.])),
     cell(rowspan: 7, stroke: 2pt, text(size: 11pt, rotate(-90deg)[ГУИР.ГУИР.353503.023 ПЗ])),
     cell(rowspan: 2, stroke: 2pt, text(size: 12pt, rotate(-90deg)[Зона])),
-    cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Обозначение]),
-    cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Наименование]),
+    cell(rowspan: 2, stroke: 2pt, text(size: 15pt)[Обозначение]),
+    cell(rowspan: 2, stroke: 2pt, text(size: 15pt)[Наименование]),
     cell(rowspan: 2, stroke: 2pt, text(size: 14pt)[Дополнительные сведения]),
 
     ..empty(),
@@ -64,7 +73,7 @@
 
     ..empty(),
 
-    ..d(
+    ..doc(
       "ГУИР КП 6-05-0612-02 023 ПЗ",
       ("Пояснительная записка",),
       "50 c."
@@ -79,7 +88,7 @@
 
     ..empty(),
 
-    ..d("ГУИР.05061202.023.01",
+    ..doc("ГУИР.05061202.023.01",
       ("Функциональная схема",
       "алгоритма, реализующего",
       "программное средство"),
@@ -89,7 +98,7 @@
     ..empty(),
 
 
-    ..d(
+    ..doc(
       "ГУИР.05061202.023.02",
       ("Блок схема алгоритма,",),
       "Формат А3"
@@ -98,7 +107,7 @@
     cell(rowspan: 5, stroke: none, []),
     cell(rowspan: 5, stroke: none, []),
 
-    ..d(
+    ..doc(
       "",
       ("реализующего программное",
        "средство"),
@@ -108,7 +117,7 @@
 
     ..empty(),
 
-    ..d(
+    ..doc(
       "ГУИР.05061202.023.01 ПЛ",
       ("Графики сравнения",
        "производительности процессоров"),
@@ -120,7 +129,7 @@
 
     ..empty(),
 
-    ..d(
+    ..doc(
       "ГУИР.05061202.023.02 ПЛ",
       ("Графическое представление",
        "нагрузки на ядра процессоров"),
@@ -147,4 +156,6 @@
     cell(rowspan: 3, stroke: 2pt, text(size: 10pt, rotate(-90deg)[Инв. № подл.])),
     cell(rowspan: 3, stroke: 2pt, []),
  )
+
+ #right-label[Формат А4]
 ]

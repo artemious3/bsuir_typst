@@ -1,4 +1,4 @@
-#import "stp/stp.typ"
+#import "lib/stp.typ"
 #show: stp.STP2024
 
 

@@ -49,18 +49,6 @@ Lorem ipsum dolor sit amet с нового абзаца!
 
 #lorem(70)
 
-// Пример листинга
-#stp2024.listing[Пример программы на языке Python][
-  ```
-def main():
-  print("Love me some СТП in the mornin'")
-  ```
-] 
-
-
-#lorem(5)
-
-
 // Пример картинки
 #figure(
   // Подпись к картинке
@@ -167,8 +155,18 @@ $ <eq>
 #stp2024.abclist(
   [#lorem(20)],
   [#lorem(10)],
-  [#lorem(30) на рисунке @kreslo]
+  [#lorem(29) (см. листинг @lst)]
 )
+
+// Пример листинга cо ссылкой
+#stp2024.listing[Пример программы на языке Python][
+  ```
+def main():
+  print("Love me some СТП in the mornin'")
+  ```
+]  <lst>
+
+#lorem(10)
 
 
 // Разрыв страницы перед Заключением

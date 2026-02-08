@@ -50,13 +50,13 @@ Lorem ipsum dolor sit amet с нового абзаца!
 #lorem(70)
 
 // Пример листинга
-#stp2024.listing([
+#stp2024.listing[Пример программы на языке Python][
   ```
 def main():
   print("Love me some СТП in the mornin'")
   ```
-], [Пример программы на языке Python]
-)
+] 
+
 
 #lorem(5)
 
@@ -187,15 +187,15 @@ $ <eq>
 
 // Пример приложения с листингом кода
 #stp2024.appendix(type:[обязательное], title:[Листинг программного кода])[
-  #stp2024.listing(
+
+  #stp2024.listing[Код на Си #lorem(12)][
     ```
 #include <stdio.h>
 int main() {
   printf("Lorem ipsum dolor sit amet");
 }
-    ```,
-[Код на Си #lorem(10)]
-  ) <ccode>
+    ```
+  ] <ccode>
 ]
 
 // Пример приложения с рисунком и таблицей

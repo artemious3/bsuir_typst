@@ -726,8 +726,7 @@
 // Пример использования: 
 //
 // ````
-// #stp2024.listing(
-//  [
+// #stp2024.listing[Пример программы на языке Python][
 //  ```
 //    def main():
 //      print("Love me some СТП in the mornin'")
@@ -735,14 +734,10 @@
 //    if __name__ == "__main__":
 //      main()
 //  ```
-//  ],
-//  [
-//    Пример программы на языке Python
-//  ]
-// )
+// ]
 // ````
 // ----------------------------------------------------------
-#let listing(body, caption) = figure(
+#let listing(caption, body) = figure(
   body,
   caption: caption,
   kind: code_kind,

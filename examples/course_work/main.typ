@@ -84,7 +84,7 @@ Lorem ipsum dolor sit amet с нового абзаца!
 
 // Уравнение с названием для ссылки на него
 $ 
- sum_(n=0)^infinity 1/(n^2) = pi^2/6
+ sum_(n=1)^infinity 1/(n^2) = pi^2/6
 $ <eq>
 
 == Lorem ipsum dolor sit amet

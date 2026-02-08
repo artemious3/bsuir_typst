@@ -248,6 +248,7 @@
   show heading.where(level:1): it => {
     counter(figure.where(kind:image)).update(0)
     counter(figure.where(kind:table)).update(0)
+    counter(figure.where(kind: "code")).update(0)
     it
   }
 
@@ -291,6 +292,43 @@
       above : 2.3em,
       below : 2.3em,
       fig.caption)
+  }
+
+  // Попытка угадать, как должен форматироваться листинг программного кода
+  show figure.where(kind: "code"): set figure.caption(position: top)
+  show figure.where(kind: "code"): it => context {
+    show raw: set text(font: "Courier New", size: 10pt)
+
+    set align(left)
+
+    set block(breakable : true)
+
+    show figure.caption: b => context {
+      // п. 2.1.1 : Запрет на переносы в назввании таблицы по логике относится и к листингу
+      set text(hyphenate: false)
+      let counter = counter(figure.where(kind:"code")).display()
+      let counter_width = measure(counter).width
+      let supplement_width = measure(b.supplement + b.separator).width
+
+      // Приложение Л : 
+      // Формируем сетку следующего вида 
+      //
+      // | Таблица <Номер> -- | <Название              |
+      // |                    | <Продолжение названия> |
+      grid(
+        columns:(supplement_width + counter_width, 1fr),
+        b.supplement + " " + counter + b.separator,
+        b.body
+      )
+    }
+
+    block(
+      above : 2.3em,
+      below : 1em,
+      it.caption) + block(
+      above : 0em,
+      below : 2.3em,
+        it.body)
   }
 
   // п. 2.6.2 : Слово "Таблица" в названии таблиц
@@ -591,7 +629,7 @@
 
 // ----------------------------------------------------------
 // Приложение (согласно п. 2.7.1, 2.7.2, 2.7.3).
-// Обязательный аргументы: 
+// Обязательные аргументы: 
 //  - kind : тип приложения (обязательное, рекомендуемое или справочное )
 //  - title : название приложения
 // 
@@ -612,6 +650,7 @@
   // Сбрасываем счётчики таблиц, изображений, формул
   counter(figure.where(kind:image)).update(0)
   counter(figure.where(kind:table)).update(0)
+  counter(figure.where(kind:"code")).update(0)
   counter(math.equation).update(0)
 
   let cnt = counter("appendix")
@@ -671,3 +710,37 @@
   outline(title:none,target:label("appendix"))
   pagebreak(weak:true)
 }
+
+
+// ----------------------------------------------------------
+// Листинг программного кода (по версии Маркова, в СТП к
+// сожалению нет НИ СТРОЧКИ ПРО ЛИСТИНГ КОДА).
+//
+// Обязательные аргументы: 
+//  - body: непосредственно программный код
+//  - caption: название листинга
+// 
+// Последним аргументом используется содержание приложения. 
+// Пример использования: 
+//
+// ```
+// #stp2024.listing(
+//  [
+//    def main():
+//      print("Love me some СТП in the mornin'")
+//
+//    if __name__ == "__main__":
+//      main()
+//  ],
+//  [
+//    Пример программы на языке Python
+//  ]
+// )
+// ```
+// ----------------------------------------------------------
+#let listing(body, caption) = figure(
+  body,
+  caption: caption,
+  kind: "code",
+  supplement: "Листинг"
+)

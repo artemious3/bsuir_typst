@@ -2,6 +2,8 @@
 // Набор функций для оформления по СТП 01-2024
 // -------------------------------------------
 
+// Typst сам по себе не имеет figure kind code, поэтому определим его здесь
+#let code_kind = "code"
 
 // -----------------------------------------------
 // Шаблон для документа, оформленного по СТП 2024.
@@ -248,7 +250,7 @@
   show heading.where(level:1): it => {
     counter(figure.where(kind:image)).update(0)
     counter(figure.where(kind:table)).update(0)
-    counter(figure.where(kind: "code")).update(0)
+    counter(figure.where(kind:code_kind)).update(0)
     it
   }
 
@@ -295,8 +297,8 @@
   }
 
   // Попытка угадать, как должен форматироваться листинг программного кода
-  show figure.where(kind: "code"): set figure.caption(position: top)
-  show figure.where(kind: "code"): it => context {
+  show figure.where(kind:code_kind): set figure.caption(position: top)
+  show figure.where(kind:code_kind): it => context {
     show raw: set text(font: "Courier New", size: 10pt)
 
     set align(left)
@@ -306,7 +308,7 @@
     show figure.caption: b => context {
       // п. 2.1.1 : Запрет на переносы в назввании таблицы по логике относится и к листингу
       set text(hyphenate: false)
-      let counter = counter(figure.where(kind:"code")).display()
+      let counter = counter(figure.where(kind:code_kind)).display()
       let counter_width = measure(counter).width
       let supplement_width = measure(b.supplement + b.separator).width
 
@@ -650,7 +652,7 @@
   // Сбрасываем счётчики таблиц, изображений, формул
   counter(figure.where(kind:image)).update(0)
   counter(figure.where(kind:table)).update(0)
-  counter(figure.where(kind:"code")).update(0)
+  counter(figure.where(kind:code_kind)).update(0)
   counter(math.equation).update(0)
 
   let cnt = counter("appendix")
@@ -741,6 +743,6 @@
 #let listing(body, caption) = figure(
   body,
   caption: caption,
-  kind: "code",
+  kind: code_kind,
   supplement: "Листинг"
 )

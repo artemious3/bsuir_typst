@@ -180,7 +180,7 @@ $ I = U / R $
   table(
     columns:(33%, 20%, 20%, 1fr),
     rows: auto,
-    table.cell(align:center, inset:(x:2em, y:1em))[Наименование показателя], [], [], [],
+    table.cell(align:center, inset:(top:2em,bottom:1.1em, x:2em))[Наименование показателя], [], [], [],
 
     [
       1 Текст текст текст текст

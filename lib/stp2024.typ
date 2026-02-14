@@ -5,6 +5,7 @@
 // Typst сам по себе не имеет figure kind code, поэтому определим его здесь
 #let code_kind = "code"
 
+
 // -----------------------------------------------
 // Шаблон для документа, оформленного по СТП 2024.
 // Стандартное использование: 
@@ -16,7 +17,7 @@
 // Всё содержание документа, следующее за этим выражением,
 // будет обёрнуто в функцию template
 // -----------------------------------------------
-#let template(doc) = {
+#let template(first_page_number : false, doc) = {
 
 
   // Оформление текста
@@ -67,7 +68,7 @@
     footer : context {
       set align(right)
       set text(14pt)
-      if counter(page).get().at(0) != 1 {
+      if first_page_number or counter(page).get().at(0) != 1 {
         counter(page).display("1")
       } else {
         []
@@ -469,6 +470,7 @@
 
     it
   }
+
 
   doc
 }

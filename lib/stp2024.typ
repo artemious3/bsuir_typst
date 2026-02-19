@@ -343,6 +343,12 @@
   // inset (значение установлено экспирементально).
   set table(inset:(top:0.9em))
 
+  // Выравнивание головы таблицы по центру.
+  // В СТП про это ни слова, однако один небезысвестный
+  // преподаватель хочет именно так. Пусть эта строчка
+  // сбережет хотя бы немного бумаги.
+  show table.cell.where(y:0) : set align(center)
+
   // п. 2.6.2 : Слово "Таблица" в названии таблиц
   show figure.where(kind:table): set figure(supplement : "Таблица")
   show figure.where(kind:table): it => context {

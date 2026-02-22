@@ -3,6 +3,21 @@ import subprocess
 import sys
 import abc
 
+class Colors:
+    """Класс для управления цветами в терминале."""
+    BLUE = '\033[94m'
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    END = '\033[0m'
+
+def truncate(text, length=50):
+    """Обрезает текст и заменяет переносы строк пробелами."""
+    text = text.replace('\n', ' ').strip()
+    return (text[:length] + '...') if len(text) > length else text
+
 def extract_text(node):
     """Рекурсивно извлекает текстовое содержимое из структуры данных Typst."""
     if isinstance(node, str):
@@ -28,7 +43,7 @@ class Rule(abc.ABC):
 class FigureHasLabelRule(Rule):
     @property
     def name(self):
-        return "ОтсутствиеМетки"
+        return "Отсутствие метки"
 
     def check(self, **kwargs):
         figures = kwargs.get('figures', [])
@@ -38,24 +53,22 @@ class FigureHasLabelRule(Rule):
                 continue
             if 'label' not in fig or not fig['label']:
                 caption_text = self._get_caption(fig)
-                errors.append(f"У фигуры №{i+1} отсутствует label, следовательно, и ссылка. Подпись: '{caption_text}'")
+                errors.append(f"Рисунок '{truncate(caption_text)}': отсутствует метка (label)")
         return errors
 
     def _get_caption(self, fig):
         caption = fig.get('caption')
         if not caption:
             return "<Без подписи>"
-        
         body = caption.get('body')
         if not body:
              return "<Пустая подпись>"
-        
         return extract_text(body).strip()
 
 class LabelIsReferencedRule(Rule):
     @property
     def name(self):
-        return "НеиспользуемаяМетка"
+        return "Неиспользуемая метка"
 
     def check(self, **kwargs):
         figures = kwargs.get('figures', [])
@@ -67,13 +80,13 @@ class LabelIsReferencedRule(Rule):
         errors = []
         for label in sorted(list(all_figure_labels)):
             if label != "<appendix>" and label not in all_referenced_targets:
-                errors.append(f"На метку {label} нет ссылок в тексте")
+                errors.append(f"Метка {Colors.CYAN}{label}{Colors.END}: на неё нет ни одной ссылки в тексте")
         return errors
 
 class CaptionNoTrailingPunctuationRule(Rule):
     @property
     def name(self):
-        return "ЗнакПрепинанияВКонцеПодписи"
+        return "Знак препинания в конце подписи"
 
     def check(self, **kwargs):
         figures = kwargs.get('figures', [])
@@ -85,20 +98,18 @@ class CaptionNoTrailingPunctuationRule(Rule):
             caption = fig.get('caption')
             if not caption:
                 continue
-            
             body = caption.get('body')
             if not body:
                 continue
-            
             text = extract_text(body).strip()
             if text and text.endswith(punctuation_marks):
-                errors.append(f"Подпись фигуры №{i+1} заканчивается значком препинания: '{text}'")
+                errors.append(f"Рисунок '{truncate(text)}': подпись заканчивается точкой или иным знаком препинания")
         return errors
 
 class HeadingPunctuationRule(Rule):
     @property
     def name(self):
-        return "ПунктуацияЗаголовков"
+        return "Пунктуация в заголовках"
 
     def check(self, **kwargs):
         headings = kwargs.get('headings', [])
@@ -110,24 +121,22 @@ class HeadingPunctuationRule(Rule):
             body = h.get('body')
             if not body:
                 continue
-            
             text = extract_text(body).strip()
             if not text:
                 continue
 
             if level in (1, 2):
                 if text.endswith(punctuation_marks):
-                    errors.append(f"Заголовок {level}-го уровня заканчивается значком препинания: '{text}'")
+                    errors.append(f"Заголовок {level}-го уровня '{truncate(text)}': обнаружен знак препинания в конце")
             elif level == 3:
                 if not text.endswith("."):
-                    errors.append(f"Заголовок 3-го уровня должен заканчиваться точкой: '{text}'")
-        
+                    errors.append(f"Заголовок 3-го уровня '{truncate(text)}': в конце обязательно должна быть точка")
         return errors
 
 class ListPunctuationRule(Rule):
     @property
     def name(self):
-        return "ПунктуацияСписков"
+        return "Пунктуация в списках"
 
     def check(self, **kwargs):
         lists = kwargs.get('lists', [])
@@ -137,29 +146,27 @@ class ListPunctuationRule(Rule):
             children = lst.get('children', [])
             if not children:
                 continue
-                
             for item_idx, item in enumerate(children):
                 body = item.get('body')
                 if not body:
                     continue
-                    
                 text = extract_text(body).strip()
                 if not text:
                     continue
                 
+                context = f"Элемент '{truncate(text, 40)}'"
                 # 1. Проверка на строчную букву
                 if text[0].isupper():
-                    errors.append(f"Элемент списка №{item_idx+1} в списке №{list_idx+1} должен начинаться со строчной буквы: '{text}'")
+                    errors.append(f"{context}: должен начинаться со строчной (маленькой) буквы")
                 
                 # 2. Проверка знаков в конце
                 is_last = (item_idx == len(children) - 1)
                 if is_last:
                     if not text.endswith("."):
-                        errors.append(f"Последний элемент списка №{list_idx+1} должен заканчиваться точкой: '{text}'")
+                        errors.append(f"{context}: последний элемент списка обязан заканчиваться точкой")
                 else:
                     if not text.endswith(";"):
-                        errors.append(f"Элемент списка №{item_idx+1} в списке №{list_idx+1} должен заканчиваться точкой с запятой: '{text}'")
-                        
+                        errors.append(f"{context}: должен заканчиваться точкой с запятой ';'")
         return errors
 
 class Linter:
@@ -171,27 +178,18 @@ class Linter:
 
     def lint(self, file_path):
         try:
-            print(f"  - Сбор данных о фигурах...")
+            print(f"  {Colors.YELLOW}»{Colors.END} Сбор данных...")
             figures = self._query(file_path, "figure")
-            print(f"  - Сбор данных о ссылках...")
             refs = self._query(file_path, "ref", field="target")
-            print(f"  - Сбор данных о заголовках...")
             headings = self._query(file_path, "heading")
-            print(f"  - Сбор данных о списках...")
             lists = self._query(file_path, "list")
         except subprocess.CalledProcessError as e:
             return {"Ошибка": [f"Ошибка выполнения 'typst query': {e.stderr.strip()}"]}
         except Exception as e:
             return {"Ошибка": [f"Произошла непредвиденная ошибка: {e}"]}
 
-        print(f"  - Проверка правил...")
         all_errors = {}
-        context = {
-            "figures": figures,
-            "refs": refs,
-            "headings": headings,
-            "lists": lists
-        }
+        context = {"figures": figures, "refs": refs, "headings": headings, "lists": lists}
         for rule in self.rules:
             errors = rule.check(**context)
             if errors:
@@ -209,7 +207,7 @@ class Linter:
 
 def main():
     if len(sys.argv) < 2:
-        print("Использование: python linter/linter.py <файл_typst>")
+        print(f"{Colors.BOLD}Использование:{Colors.END} python linter/linter.py <файл_typst>")
         sys.exit(1)
 
     file_paths = sys.argv[1:]
@@ -221,17 +219,17 @@ def main():
     linter.add_rule(ListPunctuationRule())
 
     for path in file_paths:
+        print(f"\n{Colors.BOLD}{Colors.BLUE}Анализ файла:{Colors.END} {Colors.BOLD}{path}{Colors.END}")
         results = linter.lint(path)
         
         if not results:
-            print(f"Анализ {path}: ОШИБОК НЕ ОБНАРУЖЕНО")
+            print(f"  {Colors.GREEN}✔ Ошибок не обнаружено{Colors.END}")
         else:
-            print(f"Анализ {path}: Найдены проблемы!")
             for rule_name, errors in results.items():
-                print(f"\n[{rule_name}]")
+                print(f"\n  {Colors.YELLOW}{Colors.BOLD}[{rule_name}]{Colors.END}")
                 for err in errors:
-                    print(f"  - {err}")
-            print("-" * 40)
+                    print(f"    {Colors.RED}●{Colors.END} {err}")
+        print(f"{Colors.CYAN}{'-' * 60}{Colors.END}")
 
 if __name__ == "__main__":
     main()

@@ -14,8 +14,19 @@
 // #show: stp2024.template
 // ```
 //
-// Всё содержание документа, следующее за этим выражением,
-// будет обёрнуто в функцию template
+// Использование с параметрами:
+//
+// ```
+// #show: stp2024.template.with(italicize_latin: true,
+//                              first_page_number: true)
+// ```
+//
+// Параметры:
+// - first_page_number: отображать номер страницы на первой
+//                      странице документа (default: false);
+// - italicize_latin  : отображать латинские слова курсивом
+//                      внутри абзацей (default: false),
+//                      см. также функцию `no_italic`
 // -----------------------------------------------
 #let template(first_page_number : false, italicize_latin : false, doc) = {
 

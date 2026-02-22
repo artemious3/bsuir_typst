@@ -31,6 +31,13 @@ def extract_text(node):
             return extract_text(node['body'])
     return ""
 
+def get_figure_kind_name(fig):
+    """Извлекает название типа фигуры из поля supplement (например, 'Рисунок', 'Таблица')."""
+    supplement = fig.get('supplement')
+    if supplement:
+        return extract_text(supplement).strip()
+    return "Фигура"
+
 class Rule(abc.ABC):
     @abc.abstractproperty
     def name(self):
@@ -52,8 +59,9 @@ class FigureHasLabelRule(Rule):
             if fig.get('kind') == 'hidden_appendix':
                 continue
             if 'label' not in fig or not fig['label']:
+                kind_name = get_figure_kind_name(fig)
                 caption_text = self._get_caption(fig)
-                errors.append(f"Рисунок '{truncate(caption_text)}': отсутствует метка (label)")
+                errors.append(f"{kind_name} '{truncate(caption_text)}': отсутствует метка (label)")
         return errors
 
     def _get_caption(self, fig):
@@ -103,7 +111,8 @@ class CaptionNoTrailingPunctuationRule(Rule):
                 continue
             text = extract_text(body).strip()
             if text and text.endswith(punctuation_marks):
-                errors.append(f"Рисунок '{truncate(text)}': подпись заканчивается точкой или иным знаком препинания")
+                kind_name = get_figure_kind_name(fig)
+                errors.append(f"{kind_name} '{truncate(text)}': подпись заканчивается точкой или иным знаком препинания")
         return errors
 
 class HeadingPunctuationRule(Rule):

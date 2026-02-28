@@ -2,7 +2,7 @@
 
 Шаблон системы вёрстки Typst, соответсвующий [СТП 01-2024](https://www.bsuir.by/m/12_100229_1_185586.pdf). 
 
-## Пример 
+## Пример
 
 ![Пример](examples/sample.png)
 
@@ -77,7 +77,7 @@
 
 ## Требования 
 
-В системе должны быть установлены `Times New Roman`, `Courier New` и `TeX Gyre Termes Math` (выбран в качестве наиболее 
+В системе должны быть установлены `Times New Roman`, `Courier New` и `TeX Gyre Termes Math` ( [ссылка](https://mirrors.ctan.org/fonts/tex-gyre-math/opentype/texgyretermes-math.otf), выбран в качестве наиболее 
 близкого к Times New Roman шрифта с поддержкой математики) и непосредственно Typst.
 
 ## Сборка

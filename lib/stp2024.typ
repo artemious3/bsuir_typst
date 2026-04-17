@@ -669,6 +669,7 @@
 // Обязательные аргументы: 
 //  - kind : тип приложения (обязательное, рекомендуемое или справочное )
 //  - title : название приложения
+//  - label : метка для ссылки на приложение, например, <appendix-listing>
 // 
 // Последним аргументом используется содержание приложения. 
 // Пример использования: 
@@ -677,6 +678,7 @@
 // #stp2024.appendix(
 //  title : [Ответ на главный вопрос жизни],
 //  type : [обязательное],
+//  label : <appendix-answer>,
 //  [ 
 //    Ответ на главный вопрос жизни - 42.
 //  ]
@@ -694,7 +696,10 @@
   let cnt_disp = upper(ru_alph.at(cnt.get().at(0)))
   let atype = args.at("type")
   let aname = args.at("title")
-
+  let alabel = args.at("label", default:none)
+  if alabel != none and type(alabel) != label {
+    panic("`label` argument of `appendix` functions expects type `label`")
+  }
 
   // п. 2.7.3 : Название приложения
   show heading: it =>  {
@@ -725,11 +730,15 @@
   // Спрятанный figure для правильного оформления списка приложений в содержании
   {
       show figure: none;
-      [#figure(
-              kind:"hidden_appendix",
+      [
+        #figure(kind:"hidden_appendix",
               supplement : [Приложение],
               numbering: (..)=>cnt_disp,
-              caption: [(#atype) #aname])[]]
+              caption: [(#atype) #aname])[]
+        #if alabel != none {
+          alabel
+        }
+      ]
   }
   body
 

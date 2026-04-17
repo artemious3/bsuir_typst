@@ -729,7 +729,7 @@
               kind:"hidden_appendix",
               supplement : [Приложение],
               numbering: (..)=>cnt_disp,
-              caption: [(#atype) #aname])[]<appendix>]
+              caption: [(#atype) #aname])[]]
   }
   body
 
@@ -744,7 +744,7 @@
 // ----------------------------------------------------------
 #let full_outline() = {
   outline()
-  outline(title:none,target:label("appendix"))
+  outline(title:none,target:figure.where(kind:"hidden_appendix"))
   pagebreak(weak:true)
 }
 

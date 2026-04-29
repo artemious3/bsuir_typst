@@ -148,7 +148,7 @@
   [Изм.], [Лист], [№ докум.], [Подп.], [Дата],
   //row
 
-  cell(colspan: 2, left-footer-cell[Разраб.]), left-footer-cell[#config.developer], [], [], cell(rowspan: 5, text(size: 10pt, [#config.title.join(linebreak()) \ #text(size:12pt)[#config.doc-type]])), cell(colspan: 3)[Лит.], [Лист], [Листов],
+  cell(colspan: 2, left-footer-cell[Разраб.]), left-footer-cell[#config.developer], [], [], cell(rowspan: 5, text(size: 10pt, [#upper(config.title.join(linebreak())) \ #text(size:12pt)[#config.doc-type]])), cell(colspan: 3)[Лит.], [Лист], [Листов],
   //row
 
   cell(colspan: 2, left-footer-cell[Пров.]), left-footer-cell[#config.reviewer], [], [], [], [#config.lit], [], [#config.current-page], [#config.total-pages],
@@ -221,10 +221,10 @@
 #let footer-table-config = (
   doc-number: "ГУИР КП 6-05-0612-02 023 ПЗ",
   title: (
-    "СРАВНЕНИЕ ПРОИЗВОДИТЕЛЬНОСТИ",
-    "ПРОЦЕССОРОВ INTEL CORE I5-12450H И",
-    "AMD RYZEN 7 5800H НА ОСНОВЕ",
-    "ВЫПОЛНЕНИЯ ПРЕОБРАЗОВАНИЙ ФУРЬЕ"
+    "Сравнение производительности",
+    "процессоров Intel Core i5-12450H и",
+    "Amd Ryzen 7 5800H на основе",
+    "выполнения преобразований Фурье"
   ),
   doc-type: "Ведомость курсового проекта",
   developer: "Себелев",

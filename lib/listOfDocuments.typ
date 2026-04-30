@@ -1,17 +1,5 @@
 #import table: cell
 
-#set page(
-  paper: "a4",
-  margin: (left: 10mm, right: 5mm, top: 5mm, bottom: 9mm)
-)
-
-#set text(
-  13pt,
-  font: "GOST type B",
-  style: "italic",
-  hyphenate: false,
-)
-
 #let left-cell(body) = cell(align: left)[#pad(left: 5pt)[#body]]
 #let left-footer-cell(body) = cell(align: left)[#pad(left: 1pt)[#body]]
 
@@ -29,16 +17,17 @@
 }
 
 #let doc(code, name-lines, note) = {
+  let cells = ()
   for (i, line) in name-lines.enumerate() {
     let code-cell = if i == 0 { left-cell[#code] } else { [] }
-
     let note-cell = if i == 0 { note } else { [] }
 
-    ([],
+    cells += ([],
     code-cell,
     left-cell[#line],
     note-cell)
   }
+  cells
 }
 
 #let count-rows(..cells) = {
@@ -164,92 +153,36 @@
   ))
 }
 
-#let main-table-config = (
-  documents: (
-    (section-title: "Текстовые документы"),
-
-    (
-      code: "ГУИР КП 6-05-0612-02 023 ПЗ",
-      name-lines: ("Пояснительная записка",),
-      note: "50 c."
-    ),
-
-    (section-title: "Графические документы"),
-
-    (
-      code: "ГУИР.05061202.023.01",
-      name-lines: (
-        "Функциональная схема",
-        "алгоритма, реализующего",
-        "программное средство"
-      ),
-      note: "Формат А3"
-    ),
-
-    (
-      code: "ГУИР.05061202.023.02",
-      name-lines: (
-        "Блок схема алгоритма,",
-        "реализующего программное",
-        "средство"
-      ),
-      note: "Формат А3"
-    ),
-    (
-      code: "ГУИР.05061202.023.01 ПЛ",
-      name-lines: (
-        "Графики сравнения",
-        "производительности процессоров"
-      ),
-      note: "Формат А3"
-    ),
-    (
-      code: "ГУИР.05061202.023.02 ПЛ",
-      name-lines: (
-        "Графическое представление",
-        "нагрузки на ядра процессоров"
-      ),
-      note: "Формат А3"
-    ),
+#let listOfDocuments(
+  main-table-config: (:),
+  left-table-config: (:),
+  footer-table-config: (:),
+  font: "GOST type B"
+) = {
+  set page(
+    paper: "a4",
+    margin: (left: 10mm, right: 5mm, top: 5mm, bottom: 9mm)
   )
-)
 
-#let left-table-config = (
-  left-doc-number: "ГУИР.ГУИР.353503.023 ПЗ",
-)
+  set text(
+    13pt,
+    font: font,
+    style: "italic",
+    hyphenate: false,
+  )
 
-#let footer-table-config = (
-  doc-number: "ГУИР КП 6-05-0612-02 023 ПЗ",
-  title: (
-    "Сравнение производительности",
-    "процессоров Intel Core i5-12450H и",
-    "Amd Ryzen 7 5800H на основе",
-    "выполнения преобразований Фурье"
-  ),
-  doc-type: "Ведомость курсового проекта",
-  developer: "Себелев",
-  reviewer: "Калиновская",
-  norm-control: "Калиновская",
-  approver: "Марков",
-  lit: "Т",
-  current-page: "50",
-  total-pages: "50",
-  department: "Кафедра информатики",
-  group: "353503"
-)
-
-#let create_form = grid(
-  columns: (auto, auto),
-  rows: (1fr, auto),
-
-  grid.cell(rowspan: 1, leftTable(left-table-config)),
   grid(
-    columns: (1fr,),
-    rows: (1fr, 0.17fr),
-    mainTable(main-table-config),
-    footerTable(footer-table-config)
-  ),
-  grid.cell(colspan: 2)[#right-label[Формат А4]]
-)
+    columns: (auto, auto),
+    rows: (1fr, auto),
 
-#create_form
+    grid.cell(rowspan: 1, leftTable(left-table-config)),
+    grid(
+      columns: (1fr,),
+      rows: (1fr, 0.17fr),
+      mainTable(main-table-config),
+      footerTable(footer-table-config)
+    ),
+    grid.cell(colspan: 2)[#right-label[Формат А4]]
+  )
+}
+

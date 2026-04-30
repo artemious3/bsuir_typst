@@ -829,7 +829,13 @@
 #let no_italic(word) = {"\u{200B}" + word}
 
 #import "frame.typ": frame
+#import "listOfDocuments.typ": listOfDocuments
 
 // Рамка и основная надпись графического материала
 // Подробную документацию см. во frame.typ
 #let frame = frame
+
+// Ведомость документов (Ведомость курсового проекта)
+// Подробную документацию см. в listOfDocuments.typ
+#let listOfDocuments = listOfDocuments
+

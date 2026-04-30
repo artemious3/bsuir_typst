@@ -142,6 +142,8 @@
 
     )
 
+  } else {
+    panic("Unknown frame type " + type + ". Expected  'a', 'б' or 'в'")
   }
 
   let main-caption-height = if type == "а" or type == "a" {11*5mm}

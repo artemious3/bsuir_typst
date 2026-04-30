@@ -837,5 +837,5 @@
 
 // Ведомость документов (Ведомость курсового проекта)
 // Подробную документацию см. в listOfDocuments.typ
-#let listOfDocuments = listOfDocuments
+#let list_of_documents = listOfDocuments
 

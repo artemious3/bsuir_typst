@@ -70,7 +70,7 @@
   group: "353503",
 )
 
-#stp2024.listOfDocuments(
+#stp2024.list_of_documents(
   main-table-config: main-table-conf,
   left-table-config: left-table-conf,
   footer-table-config: footer-table-conf,

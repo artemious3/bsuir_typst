@@ -23,7 +23,7 @@
 #stp2024.frame(paper:"a4",stroke:0pt, type:"a", config:conf)[]
 
 // Рамка A4
-#stp2024.frame(paper:"a4",type:"a", config:conf)[
+#stp2024.frame(paper:"a4", font:"GOST type B", type:"a", config:conf)[
   #v(1fr)
   #align(center,image("prostofila.jpg", width: 20%))
   #v(1fr)

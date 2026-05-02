@@ -24,35 +24,28 @@
 
 // Рамка A4
 #stp2024.frame(paper:"a4", font:"GOST type B", type:"a", config:conf)[
-  #v(1fr)
-  #align(center,image("prostofila.jpg", width: 20%))
-  #v(1fr)
+  // Содержание выровнено по центру горизонтально (center)
+  // и вертикально (horizon)
+  #place(center+horizon, image("prostofila.jpg", width: 20%))
 ]
 
 // Рамка A3 (портретная, тип а)
 #stp2024.frame(paper:"a3",type:"a", config:conf)[
-  #v(1fr)
-  #align(center,image("prostofila.jpg", width: 20%))
-  #v(1fr)
+  // Можно изменять положение с помощью dx, dy
+  #place(center+horizon, dx:-20%,image("prostofila.jpg", width: 20%))
 ]
 
 // Рамка A3 (альбомная, тип а)
 #stp2024.frame(paper:"a3",flipped: true, type:"a", config:conf)[
-  #v(1fr)
-  #align(center,image("prostofila.jpg", width: 20%))
-  #v(1fr)
+  #place(center+horizon, dx:+20%,image("prostofila.jpg", width: 20%))
 ]
 
 // Рамка A3 (альбомная, тип б)
 #stp2024.frame(paper:"a3",flipped: true, type:"б", config:conf)[
-  #v(1fr)
-  #align(center,image("prostofila.jpg", width: 20%))
-  #v(1fr)
+  #place(center+horizon, dy:-20%,image("prostofila.jpg", width: 20%))
 ]
 
 // Рамка A3 (альбомная, тип в)
 #stp2024.frame(paper:"a3",flipped: true, type:"в", config:conf)[
-  #v(1fr)
-  #align(center,image("prostofila.jpg", width: 20%))
-  #v(1fr)
+  #place(center+horizon, dy:+20%,image("prostofila.jpg", width: 20%))
 ]

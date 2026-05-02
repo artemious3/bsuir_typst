@@ -150,12 +150,10 @@
                        else if type == "б" or type == "b" {8*5mm}
                        else if type == "в" or type == "c" {3*5mm};
 
-  rect(stroke:stroke, inset:0%, grid(
-    columns: (1fr,),
-    rows: (1fr, main-caption-height),
-    [#content],
-    align(right,main-caption(config))
-  ))
+  rect(stroke:stroke, inset:0%, {
+    block(width: 100%, height: 100%, content)
+    place(bottom+right, block(fill:white,main-caption(config)))
+  })
 
 }
 

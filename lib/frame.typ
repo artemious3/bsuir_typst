@@ -151,7 +151,7 @@
                        else if type == "в" or type == "c" {3*5mm};
 
   rect(stroke:stroke, inset:0%, {
-    block(width: 100%, height: 100%, content)
+    block(width: 100%, height: 100%,inset: stroke, content)
     place(bottom+right, block(fill:white,main-caption(config)))
   })
 

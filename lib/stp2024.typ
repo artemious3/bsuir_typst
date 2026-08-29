@@ -237,7 +237,7 @@
        text(
           weight : "regular",
           counter_str
-        )  + " "
+        )
       )
   }
 

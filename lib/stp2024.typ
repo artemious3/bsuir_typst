@@ -215,11 +215,6 @@
      text(
         weight : "bold",
         counter_str
-      )   +
-      " " +
-      text(
-        weight : "regular",
-        body.body
       )
     )
   }

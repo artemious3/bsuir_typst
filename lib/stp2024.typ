@@ -198,52 +198,25 @@
   }
 
 
-  // Оформление заголовка третьего уровня (пунктов)
-  show heading.where(level:3): body => {
-    set text(
-      size: 14pt,
-    )
-
+  let make_heading_number(body, weight) = {
+    set text(size: 14pt)
     let counter_str = if body.numbering != none {
       counter(heading).display(body.numbering)
-    } else {
-      ""
-    }
-    // Приложение Л : Оформление пунктов.
-    //                Пробельная строка между пунктами.
-    v(2.3em, weak : true) + box(
-     text(
-        weight : "bold",
-        counter_str
-      )   +
-      " " +
-      text(
-        weight : "regular",
-        body.body
-      )
-    )
+    } else { "" }
+    text(weight: weight, counter_str)
   }
 
+  // Оформление заголовка третьего уровня (пунктов)
+  // Приложение Л : Оформление пунктов.
+  //                Пробельная строка между пунктами.
+  show heading.where(level: 3): body => {
+    v(2.3em, weak: true) + box(make_heading_number(body, "bold"))
+  }
 
   // Оформление заголовков 4-го уровня (подпунктов)
-  show heading.where(level:4): body => {
-    set text(
-      size: 14pt,
-    )
-
-    let counter_str = if body.numbering != none {
-      counter(heading).display(body.numbering)
-    } else {
-      ""
-    }
-
     // Приложение Л : оформление подпунктов
-    box(
-       text(
-          weight : "regular",
-          counter_str
-        )  + " "
-      )
+  show heading.where(level: 4): body => {
+    box(make_heading_number(body, "regular"))
   }
 
 
